@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  goodFile: {
+  goodPost: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'File' // fileSchema
