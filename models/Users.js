@@ -17,12 +17,12 @@ const UserSchema = new mongoose.Schema({
   goodPost: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'File' // fileSchema
+    ref: 'Post' // fileSchema
   },
   questions: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'FAQ'
+    ref: 'Questions'
   }
 });
 
