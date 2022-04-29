@@ -14,16 +14,16 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  goodPost: {
+  goodPost: [{
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Post' // fileSchema
-  },
-  questions: {
+  }],
+  questions: [{
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Questions'
-  }
+  }]
 });
 
 UserSchema.index({ username: 1 });
