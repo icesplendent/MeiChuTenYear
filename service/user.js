@@ -18,7 +18,7 @@ const userService = {
   async findOne(filter) {
     // TODO: add hashPassword
     try {
-      const result = await model.user.findOne(filter).lean();
+      const result = await model.Users.findOne(filter).lean();
       logger.info('[User Service] Find user successfully');
       return result;
     } catch (error) {
@@ -32,8 +32,8 @@ const userService = {
     } = params;
 
     try {
-      const total = await model.user.countDocuments(filter).lean();
-      const data = await model.user.find(filter, null, { limit, skip, sort }).lean;
+      const total = await model.Users.countDocuments(filter).lean();
+      const data = await model.Users.find(filter, null, { limit, skip, sort }).lean;
       logger.info('[User Service] Find users successfully');
       return { total, data };
     } catch (error) {
