@@ -95,9 +95,7 @@ const userController = {
         type: 'forbidden'
       },
       username: {
-        type: 'string',
-        allowEmpty: false,
-        min: 1
+        type: 'forbidden'
       },
       password: {
         type: 'string',

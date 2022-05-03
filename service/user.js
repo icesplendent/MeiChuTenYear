@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import model from '../models';
 import logger from '../libs/logger';
 import '../libs/config';
+import { param } from 'express/lib/request';
 
 const jwtKey = process.env.JWT_KEY;
 const saltRound = 10;
@@ -64,6 +65,24 @@ const userService = {
     } catch (error) {
       logger.error('[User Service]', error);
       throw new Error('Invalid user login data');
+    }
+  },
+  async updateOne(params) {
+    const { _id } = params;
+    if (params.password) {
+      const salt = await bcrypt.getSalt(saltRound);
+      const hashPassword = await Bcrypt.hash(params.password, salt);
+      // eslint-disable-next-line no-param-reassign
+      params.password = hashPassword;
+    }
+
+    try {
+      const result = await model.Users.updateOne({ _id }, params).lean();
+      logger.info('[User Service] Update user successfully');
+      return result.n > 0 ? { success: true } : {};
+    } catch (error) {
+      logger.error('[User Service]', error);
+      throw new Error(`Failed to update user in database, ${error}`);
     }
   }
 };
