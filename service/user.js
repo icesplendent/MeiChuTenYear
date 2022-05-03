@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import model from '../models';
 import logger from '../libs/logger';
 import '../libs/config';
-import { param } from 'express/lib/request';
 
 const jwtKey = process.env.JWT_KEY;
 const saltRound = 10;
@@ -70,8 +69,8 @@ const userService = {
   async updateOne(params) {
     const { _id } = params;
     if (params.password) {
-      const salt = await bcrypt.getSalt(saltRound);
-      const hashPassword = await Bcrypt.hash(params.password, salt);
+      const salt = await bcrypt.genSalt(saltRound);
+      const hashPassword = await bcrypt.hash(params.password, salt);
       // eslint-disable-next-line no-param-reassign
       params.password = hashPassword;
     }
