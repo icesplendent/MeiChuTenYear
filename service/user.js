@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import model from '../models';
 import logger from '../libs/logger';
+import '../libs/config';
 
 const jwtKey = process.env.JWT_KEY;
 const saltRound = 10;

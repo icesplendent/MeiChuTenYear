@@ -19,10 +19,14 @@ describe('Test \'users\' service', () => {
   describe('Test \'users.register\' action', () => {
     it('add an user, should return with the user', async () => {
       const res = await request(app).post('/user/register')
-        .send({ isAdmin: false, username: 'hello', password: 'password' });
+        .send({
+          isAdmin: false,
+          username: 'test1',
+          password: 'rootroot'
+        });
       expect(res.body).toEqual(expect.objectContaining({
         _id: expect.anything(),
-        username: 'hello'
+        username: 'test1'
       }));
       newUser = res.body;
     });
@@ -44,6 +48,18 @@ describe('Test \'users\' service', () => {
       const res = await request(app).post('/user/getUsers');
       expect(res.body.total).toBeGreaterThanOrEqual(1);
       expect(res.body).toHaveProperty('data');
+    });
+  });
+
+  describe('Test \'users.login\' action', () => {
+    it('login, should return with a token', async () => {
+      const res = await request(app).post('/user/login').send({
+        username: 'test1',
+        password: 'rootroot'
+      });
+      expect(res.body).toEqual(expect.objectContaining({
+        token: expect.anything()
+      }));
     });
   });
 
