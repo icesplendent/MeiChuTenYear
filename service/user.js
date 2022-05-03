@@ -28,12 +28,12 @@ const userService = {
   },
   async findAll(params) {
     const {
-      filter, limit, skip, sort = { order: -1 }
+      projection, filter, limit, skip, sort = { order: -1 }
     } = params;
 
     try {
       const total = await model.Users.countDocuments(filter).lean();
-      const data = await model.Users.find(filter, null, { limit, skip, sort }).lean;
+      const data = await model.Users.find(filter, projection, { limit, skip, sort }).lean();
       logger.info('[User Service] Find users successfully');
       return { total, data };
     } catch (error) {
