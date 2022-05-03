@@ -78,7 +78,7 @@ const userService = {
     try {
       const result = await model.Users.updateOne({ _id }, params).lean();
       logger.info('[User Service] Update user successfully');
-      return result.n > 0 ? { success: true } : {};
+      return { success: result.acknowledged };
     } catch (error) {
       logger.error('[User Service]', error);
       throw new Error(`Failed to update user in database, ${error}`);

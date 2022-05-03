@@ -115,7 +115,7 @@ const userController = {
     try {
       validator.validate(req.body, rule);
       const user = await service.user.updateOne(req.body);
-      res.json(user.n > 0 ? { success: true } : {});
+      res.json(user);
     } catch (error) {
       logger.error('[User Controller] Failed to modifyUser:', error);
       res.status(400).json({ message: `Failed to modifyUser, ${error}` });

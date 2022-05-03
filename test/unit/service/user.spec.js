@@ -63,13 +63,13 @@ describe('Test \'users\' service', () => {
     });
   });
 
-  //   describe('Test \'users.modifyUser\' action', () => {
-  //     it('modify an user, should return with \'success message\'', async () => {
-  //       const res = await request(app).post('/user/modifyUser')
-  //         .send({ _id: newUser._id, password: 'test-modify' });
-  //       expect(res.body).toHaveProperty('success', true);
-  //     });
-  //   });
+  describe('Test \'users.modifyUser\' action', () => {
+    it('modify an user, should return with \'success message\'', async () => {
+      const res = await request(app).post('/user/modifyUser')
+        .send({ _id: newUser._id, password: 'test-modify' });
+      expect(res.body).toHaveProperty('success', true);
+    });
+  });
 
 //   describe('Test \'users.removeUser\' action', () => {
 //     it('remove an user, should return with \'success message\'', async () => {
