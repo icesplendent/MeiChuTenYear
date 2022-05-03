@@ -1,12 +1,18 @@
-// import jwt from 'jsonwebtoken';
-// import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import model from '../models';
 import logger from '../libs/logger';
 
+const jwtKey = process.env.JWT_KEY;
+const saltRound = 10;
+
 const userService = {
   async create(params) {
-    // TODO: add hashPassword
     try {
+      const salt = await bcrypt.genSalt(saltRound);
+      const hashPassword = await bcrypt.hash(params.password, salt);
+      // eslint-disable-next-line no-param-reassign
+      params.password = hashPassword;
       const result = await model.Users.create(params);
       logger.info('[User Service] Create user successfully');
       return result;
@@ -16,7 +22,6 @@ const userService = {
     }
   },
   async findOne(filter) {
-    // TODO: add hashPassword
     try {
       const result = await model.Users.findOne(filter).lean();
       logger.info('[User Service] Find user successfully');
@@ -39,6 +44,25 @@ const userService = {
     } catch (error) {
       logger.error('[User Service]', error);
       throw new Error(`Failed to find users in database, ${error}`);
+    }
+  },
+  async login(params) {
+    const { username, password } = params;
+    try {
+      const user = await model.Users.findOne({ username }).lean();
+      const result = await bcrypt.compare(password, user.password);
+      if (result) {
+        logger.info('[User Service] Correct username');
+        const token = jwt.sign(
+          { _id: user._id, username: user.username },
+          jwtKey
+        );
+        return { token };
+      }
+      return { success: false };
+    } catch (error) {
+      logger.error('[User Service]', error);
+      throw new Error('Invalid user login data');
     }
   }
 };
