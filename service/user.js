@@ -98,7 +98,7 @@ const userService = {
     try {
       const result = await model.Users.deleteMany(filter).lean();
       logger.info('[User Service] Delete users successfully');
-      return { success: result.acknowledged };
+      return { deletedCount: result.deletedCount };
     } catch (error) {
       logger.error('[User Service]', error);
       throw new Error(`Failed to delete users in database, ${error}`);

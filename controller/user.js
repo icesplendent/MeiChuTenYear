@@ -137,7 +137,8 @@ const userController = {
   async removeUsers(req, res) {
     const rule = {
       username: {
-        type: 'string'
+        type: 'string',
+        optional: true
       }
     };
     try {
