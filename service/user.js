@@ -83,6 +83,26 @@ const userService = {
       logger.error('[User Service]', error);
       throw new Error(`Failed to update user in database, ${error}`);
     }
+  },
+  async deleteOne(filter) {
+    try {
+      const result = await model.Users.deleteOne(filter).lean();
+      logger.info('[User Service] Delete user successfully');
+      return { success: result.acknowledged };
+    } catch (error) {
+      logger.error('[User Service]', error);
+      throw new Error(`Failed to delete user in database, ${error}`);
+    }
+  },
+  async deleteMany(filter) {
+    try {
+      const result = await model.Users.deleteMany(filter).lean();
+      logger.info('[User Service] Delete users successfully');
+      return { success: result.acknowledged };
+    } catch (error) {
+      logger.error('[User Service]', error);
+      throw new Error(`Failed to delete users in database, ${error}`);
+    }
   }
 };
 

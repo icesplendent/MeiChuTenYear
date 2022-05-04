@@ -125,7 +125,6 @@ const userController = {
     const rule = {
       _id: idRule
     };
-
     try {
       validator.validate(req.body, rule);
       const user = await service.user.deleteOne(req.body);
@@ -133,6 +132,21 @@ const userController = {
     } catch (error) {
       logger.error('[User Controller] Failed to removeUser:', error);
       res.status(400).json({ message: `Failed to removeUser, ${error}` });
+    }
+  },
+  async removeUsers(req, res) {
+    const rule = {
+      username: {
+        type: 'string'
+      }
+    };
+    try {
+      validator.validate(req.body, rule);
+      const user = await service.user.deleteMany(req.body);
+      res.json(user);
+    } catch (error) {
+      logger.error('[User Controller] Failed to removeUsers:', error);
+      res.status(400).json({ message: `Failed to removeUsers, ${error}` });
     }
   },
   async login(req, res) {

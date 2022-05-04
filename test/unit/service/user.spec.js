@@ -71,11 +71,19 @@ describe('Test \'users\' service', () => {
     });
   });
 
-//   describe('Test \'users.removeUser\' action', () => {
-//     it('remove an user, should return with \'success message\'', async () => {
-//       const res = await request(app).post('/user/removeUser')
-//         .send({ _id: newUser._id });
-//       expect(res.body).toHaveProperty('success', true);
-//     });
-//   });
+  describe('Test \'users.removeUser\' action', () => {
+    it('remove an user, should return with \'success message\'', async () => {
+      const res = await request(app).post('/user/removeUser')
+        .send({ _id: newUser._id });
+      expect(res.body).toHaveProperty('success', true);
+    });
+  });
+
+  describe('Test \'users.removeUsers\' action', () => {
+    it('remove users, should return with \'success message\'', async () => {
+      const res = await request(app).post('/user/removeUsers')
+        .send({ username: newUser.username });
+      expect(res.body).toHaveProperty('success', true);
+    });
+  });
 });
