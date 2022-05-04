@@ -39,6 +39,10 @@ const userController = {
 
     try {
       validator.validate(req.body, rule);
+      const found = await service.user.findOne({ username: req.body.username });
+      if (found) {
+        throw new Error('username already in use');
+      }
       const body = await service.user.create(req.body);
       res.json(body);
     } catch (error) {
