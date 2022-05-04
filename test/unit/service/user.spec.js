@@ -86,4 +86,12 @@ describe('Test \'users\' service', () => {
       expect(res.body).toHaveProperty('success', true);
     });
   });
+
+  describe('Test \'users.getCurrentUser\' action', () => {
+    it('get current user, should return with \'success message\'', async () => {
+      const res = await request(app).post('/user/getCurrentUser')
+        .send({ _id: newUser._id });
+      expect(res.body).toEqual({ message: 'Not signed in yet.' });
+    });
+  });
 });

@@ -168,11 +168,15 @@ const userController = {
     }
   },
   async getCurrentUser(req, res) {
-    if (req.user) {
-      const user = await service.user.findOne({ _id: req.user._id });
-      res.json(user);
+    if (req.body) {
+      const user = await service.user.findOne({ _id: req.body._id });
+      if (user != null) {
+        res.json(user);
+      } else {
+        res.status(400).json({ message: 'Not signed in yet.' });
+      }
     } else {
-      res.status(400).json({ message: 'Not logged in.' });
+      res.status(400).json({ message: 'Not signed in yet.' });
     }
   }
 };
