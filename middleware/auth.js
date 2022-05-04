@@ -16,6 +16,7 @@ const AuthenticationMiddleware = (checkAdmin, stricted = true) => async (req, re
     try {
       const token = auth.slice(7);
       const payload = jwt.verify(token, publicKey, { algorithms: ['RS256'] });
+	  console.log(payload);
 
       if (!payload.isAdmin && checkAdmin) { throw new Error('User not Admin'); }
 

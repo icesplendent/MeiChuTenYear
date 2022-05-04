@@ -58,7 +58,7 @@ const userService = {
       if (result) {
         logger.info('[User Service] Correct username');
         const token = jwt.sign(
-          { _id: user._id, username: user.username },
+          { _id: user._id, username: user.username, isAdmin: user.isAdmin },
           privateKey,
           { algorithm: 'RS256' }
         );
@@ -98,7 +98,8 @@ const userService = {
       throw new Error(`Failed to delete user in database, ${error}`);
     }
   },
-  async deleteMany(filter) {
+  async deleteMany(params) {
+    const { filter } = params;
     try {
       const result = await model.Users.deleteMany(filter).lean();
       logger.info('[User Service] Delete users successfully');

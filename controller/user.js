@@ -143,6 +143,7 @@ const userController = {
     };
     try {
       validator.validate(req.body, rule);
+      req.body.filter = { ...req.body, isAdmin: false };
       const user = await service.user.deleteMany(req.body);
       res.json(user);
     } catch (error) {
