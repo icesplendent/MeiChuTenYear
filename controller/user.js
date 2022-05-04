@@ -88,7 +88,7 @@ const userController = {
       res.status(400).json({ message: `Failed to getUsers, ${error}` });
     }
   },
-  async modifyUser(req, res) {
+  async modifyCurrentUser(req, res) {
     const rule = {
       _id: idRule,
       isAdmin: {
@@ -169,13 +169,9 @@ const userController = {
     }
   },
   async getCurrentUser(req, res) {
-    if (req.body) {
-      const user = await service.user.findOne({ _id: req.body._id });
-      if (user != null) {
-        res.json(user);
-      } else {
-        res.status(400).json({ message: 'Not signed in yet.' });
-      }
+    if (req.user) {
+      const user = await service.user.findOne({ _id: req.user._id });
+      res.json(user);
     } else {
       res.status(400).json({ message: 'Not signed in yet.' });
     }
