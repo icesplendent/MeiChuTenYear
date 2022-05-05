@@ -1,6 +1,7 @@
 import logger from '../libs/logger';
 import service from '../service';
 import validator from '../libs/validator';
+import { ObjectID } from mongodb;
 
 const idRule = {
   type: 'multi',
@@ -105,11 +106,11 @@ const userController = {
         type: 'string',
         allowEmpty: false,
         min: 6
+      },
+      goodPost: {
+        type: 'array',
+        items: idRule
       }
-    //   goodPost: {
-    //     type: 'array',
-    //     items: idRule
-    //   },
     //   questions: {
     //     type: 'array',
     //     items: idRule
