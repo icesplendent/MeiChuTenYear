@@ -71,11 +71,27 @@ describe('Test \'users\' service', () => {
     });
   });
 
-//   describe('Test \'users.removeUser\' action', () => {
-//     it('remove an user, should return with \'success message\'', async () => {
-//       const res = await request(app).post('/user/removeUser')
-//         .send({ _id: newUser._id });
-//       expect(res.body).toHaveProperty('success', true);
-//     });
-//   });
+  describe('Test \'users.removeUser\' action', () => {
+    it('remove an user, should return with \'success message\'', async () => {
+      const res = await request(app).post('/user/removeUser')
+        .send({ _id: newUser._id });
+      expect(res.body).toHaveProperty('success', true);
+    });
+  });
+
+  describe('Test \'users.removeUsers\' action', () => {
+    it('remove users, should return with \'success message\'', async () => {
+      const res = await request(app).post('/user/removeUsers')
+        .send({ username: newUser.username });
+      expect(res.body).toHaveProperty('success', true);
+    });
+  });
+
+  describe('Test \'users.getCurrentUser\' action', () => {
+    it('get current user, should return with \'success message\'', async () => {
+      const res = await request(app).post('/user/getCurrentUser')
+        .send({ _id: newUser._id });
+      expect(res.body).toEqual({ message: 'Not signed in yet.' });
+    });
+  });
 });

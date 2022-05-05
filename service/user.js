@@ -1,10 +1,13 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import fs from 'fs';
 import model from '../models';
 import logger from '../libs/logger';
 import '../libs/config';
 
-const jwtKey = process.env.JWT_KEY;
+const privateKeyLocation = process.env.PRIVATE_KEY_LOCATION;
+const rootDir = process.cwd();
+const privateKey = fs.readFileSync(`${rootDir}${privateKeyLocation}`);
 const saltRound = 10;
 
 const userService = {
@@ -55,8 +58,9 @@ const userService = {
       if (result) {
         logger.info('[User Service] Correct username');
         const token = jwt.sign(
-          { _id: user._id, username: user.username },
-          jwtKey
+          { _id: user._id, username: user.username, isAdmin: user.isAdmin },
+          privateKey,
+          { algorithm: 'RS256' }
         );
         return { token };
       }
@@ -82,6 +86,27 @@ const userService = {
     } catch (error) {
       logger.error('[User Service]', error);
       throw new Error(`Failed to update user in database, ${error}`);
+    }
+  },
+  async deleteOne(filter) {
+    try {
+      const result = await model.Users.deleteOne(filter).lean();
+      logger.info('[User Service] Delete user successfully');
+      return { success: result.acknowledged };
+    } catch (error) {
+      logger.error('[User Service]', error);
+      throw new Error(`Failed to delete user in database, ${error}`);
+    }
+  },
+  async deleteMany(params) {
+    const { filter } = params;
+    try {
+      const result = await model.Users.deleteMany(filter).lean();
+      logger.info('[User Service] Delete users successfully');
+      return { deletedCount: result.deletedCount };
+    } catch (error) {
+      logger.error('[User Service]', error);
+      throw new Error(`Failed to delete users in database, ${error}`);
     }
   }
 };
