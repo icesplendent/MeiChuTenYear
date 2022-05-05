@@ -1,7 +1,7 @@
 import model from '../models';
 import logger from '../libs/logger';
 
-const userService = {
+const postService = {
   async create(params) {
     try {
       const result = await model.Posts.create(params);
@@ -45,4 +45,4 @@ const userService = {
   }
 };
 
-export default userService;
+export default postService;

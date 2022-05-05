@@ -10,33 +10,33 @@ const idRule = {
   ]
 };
 
-const userController = {
+const postController = {
   async addPost(req, res) {
     const rule = {
       name: {
-        type: 'String',
+        type: 'string',
         allowEmpty: true
       },
       description: {
-        type: 'String',
+        type: 'string',
         allowEmpty: false
       },
       short_description: {
-        type: 'String',
+        type: 'string',
         allowEmpty: false,
         max: 30
       },
       slide: {
-        type: 'String',
+        type: 'string',
         allowEmpty: false
       },
       link: {
         type: 'array',
-        items: 'String',
+        items: 'string',
         allowEmtpy: false
       },
       thumbnail_path: {
-        type: String,
+        type: 'string',
         allowEmpty: false
       }
     };
@@ -121,4 +121,4 @@ const userController = {
 
 };
 
-export default userController;
+export default postController;
